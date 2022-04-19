@@ -2,11 +2,17 @@
 // Iteration 1 - `for...of` loop
 // ***************************************************************************
 
-const getFirstNames = arr => {
+
+
+
+
+
+ getFirstNames = usersArray => {
   const userFirstNames = [];
-  for (let user of arr) {
-    // Your code goes here ...
+  for (let user of usersArray) {
+    userFirstNames.push(user.firstName)
   }
+  return userFirstNames
 };
 
 getFirstNames(usersArray);
@@ -17,9 +23,15 @@ getFirstNames(usersArray);
 // Iteration 2 - `for...of` loop and ES6 string literals `${}`
 // ***************************************************************************
 
-const getFullNames = arr => {
-  // Your code goes here ...
+const getFullNames = usersArray => {
+  const userFullNames = [];
+  for (let user of usersArray) {
+    userFullNames.push(`${user.firstName}` + ' ' + `${user.lastName}`)
+  }
+  return userFullNames;
 };
+
+console.log(getFullNames(usersArray))
 
 getFullNames(usersArray);
 // expected output:
@@ -30,10 +42,16 @@ getFullNames(usersArray);
 // Iteration 3 - ES6 destructuring , for of loop, object literal
 // ***************************************************************************
 
-const getUsersCreditDetails = arr => {
-  // Your code goes here ...
-};
+const getUsersCreditDetails = usersArray => {
+  const userCreditDetails = [];
+  let a, b, c;
 
+  for (let user of usersArray) {
+    userCreditDetails.push({a,b,c} = {a: user.firstName,b: user.lastName, c:user.balance})
+  }
+  return userCreditDetails;
+};
+console.log(getUsersCreditDetails(usersArray))
 getUsersCreditDetails(usersArray);
 // expected output:
 // [ { firstName: 'Kirby', lastName: 'Doyle', balance: '$3,570.06' },
@@ -49,9 +67,18 @@ getUsersCreditDetails(usersArray);
 // ***************************************************************************
 
 const genderView = users => {
-  // Your code goes here ...
+
+ let femaleUsers = usersArray.filter(user => user.gender === 'female');
+ let maleUsers = usersArray.filter(user => user.gender === 'male');
+ let femaleUserNames = getFullNames(femaleUsers);
+
+ let maleUserNames = getFullNames(maleUsers);
+
+ return {femaleUserNames, maleUserNames}
+
 };
 
+console.log(genderView())
 genderView(usersArray);
 // expected output:
 // {
@@ -66,9 +93,13 @@ genderView(usersArray);
 const data = genderView(usersArray);
 
 const genderCount = data => {
-  // Your code goes here ...
+  let femaleCount = genderView(usersArray).femaleUserNames.length
+  let maleCount = genderView(usersArray).maleUserNames.length
+
+  return (`Female: ${femaleCount} maleUsers: ${maleCount}`)
 };
 
+console.log(genderCount())
 genderCount(data);
 // expected output:
 // Female: 4
@@ -79,8 +110,11 @@ genderCount(data);
 // ***************************************************************************
 
 const promo20 = users => {
-  // Your code goes here ...
+  let over20k = usersArray.filter(user => user.balance > 20000);
+  return over20k
 };
+
+console.log(promo20());
 
 // expected output:
 // Dear Howard, since your balance is $21,307.75, you are eligible to apply for this awesome credit card.
